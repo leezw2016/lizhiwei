@@ -1,0 +1,6 @@
+server:
+  port: 8080
+
+netty:
+  server:
+    port: 3333
