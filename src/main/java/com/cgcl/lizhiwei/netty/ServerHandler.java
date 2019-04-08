@@ -27,7 +27,6 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     private static Map<String, List<Point>> lineMap = new ConcurrentHashMap<>();
-    private static Map<ChannelId, String> channelIdToLineNameMap = new ConcurrentSkipListMap<>();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
@@ -39,7 +38,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 List<Point> list = new ArrayList<>();
                 list.add(point);
                 lineMap.put(point.getName(), list);
-                channelIdToLineNameMap.put(ctx.channel().id(), point.getName());
             } else {
                 List<Point> list = lineMap.get(point.getName());
                 point.setId(list.size() + 1L);
@@ -73,9 +71,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
         log.info(ctx.channel().remoteAddress() + ": Channel Unregistered");
-        String name = channelIdToLineNameMap.get(ctx.channel().id());
-        lineMap.remove(name);
-        channelIdToLineNameMap.remove(ctx.channel().id());
     }
 
     @Override

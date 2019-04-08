@@ -6,19 +6,32 @@ var Index = function () {
         title: {
             top: '5%',
             left: '10%',
-            text: 'title'
+            text: ''
         },
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            formatter: function (params) {
+                var rs = [];
+                if (params.length <= 0) return "";
+                rs.push(params[0]["axisValue"] + " （百万请求量）<br>");
+                for (var i = 0; i < params.length; i++) {
+                    rs.push(params[i]["seriesName"] + " : " + params[i]["data"][1] + " （每秒请求数）<br>");
+                }
+                return rs.join("");
+            }
         },
         legend: {
             top: '5%',
+            left: '30%',
+            textStyle: {
+                fontSize: 20
+            },
             data: []
         },
         grid: {
             top: '15%',
             left: '5%',
-            right: '5%',
+            right: '15%',
             bottom: '5%',
             containLabel: true
         },
@@ -44,11 +57,20 @@ var Index = function () {
         ],
         xAxis: {
             type: 'value',
-            name: 'xAxis'
+            interval: 20,
+            name: '总共请求数（单位：百万）',
+            nameTextStyle: {
+                fontSize: 20
+            }
         },
         yAxis: {
             type: 'value',
-            name: 'yAxis'
+            min: 100000,
+            interval: 10000,
+            name: '吞吐量（每秒处理请求数）',
+            nameTextStyle: {
+                fontSize: 20
+            }
         },
         series: []
     };
@@ -97,6 +119,8 @@ var Index = function () {
                 line["name"] = name;
                 line["type"] = "line";
                 line["data"] = [];
+                line["showSymbol"] = false;
+                line["hoverAnimation"] = false;
                 for (var i = 0; i < lineList.length; i++) {
                     var point = lineList[i];
                     var pArr = [point["x"], point["y"]];
