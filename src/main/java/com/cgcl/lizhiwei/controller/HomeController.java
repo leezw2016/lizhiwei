@@ -1,8 +1,13 @@
 package com.cgcl.lizhiwei.controller;
 
+import com.cgcl.lizhiwei.netty.ServerHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * <p>
@@ -18,5 +23,12 @@ public class HomeController {
     @RequestMapping("/")
     public String home(){
         return "index";
+    }
+
+    @RequestMapping("/clearData")
+    @ResponseBody
+    public void clearData(HttpServletResponse response) throws IOException {
+        ServerHandler.clearLineMap();
+        response.sendRedirect("/");
     }
 }

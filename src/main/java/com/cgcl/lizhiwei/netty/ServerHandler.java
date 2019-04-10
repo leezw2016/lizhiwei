@@ -6,13 +6,13 @@ import com.cgcl.lizhiwei.entity.Point;
 import com.cgcl.lizhiwei.websocket.WebSocketServer;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelId;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * <p>
@@ -97,5 +97,9 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     public static String getLineMapMessageWraps() {
         return Message.success().add("lineMap", lineMap).toString();
+    }
+
+    public static void clearLineMap() {
+        lineMap.clear();
     }
 }

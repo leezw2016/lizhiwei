@@ -30,7 +30,7 @@ var Index = function () {
         },
         grid: {
             top: '15%',
-            left: '5%',
+            left: '10%',
             right: '15%',
             bottom: '5%',
             containLabel: true
